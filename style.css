@@ -1,0 +1,67 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+:root{
+    --red: #f43636;
+    --bright-red: #ff0505;
+    --blue: #2d62ff;
+    --bright-blue: #0028ff;
+    --green: #5eff44;
+    --bright-green: #03f500;
+    --yellow: #efc603;
+    --bright-yellow: #fffd10;
+
+}
+.container {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.top,
+.bottom {
+	height: 50vh;
+	width: 100%;
+	display: flex;
+}
+.red,
+.blue,
+.green,
+.yellow {
+	height: 100%;
+	width: 50%;
+    cursor: pointer;
+}
+
+.red {
+	background: #f43636;
+}
+.blue {
+	background: #2d62ff;
+}
+.green {
+	background: #5eff44;
+}
+.yellow {
+	background: #efc603;
+}
+
+.red:hover{
+    background: #ff0505;
+}
+
+.blue:hover{
+    background: #0028ff;
+}
+
+.green:hover{
+    background: #03f500;
+}
+
+
+.yellow:hover{
+    background: #fffd10;
+}
