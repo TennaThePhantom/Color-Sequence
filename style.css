@@ -3,22 +3,21 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-body{
+body {
 	height: 100vh;
 	width: 100%;
 }
-:root{
-    --red: #f43636;
-    --bright-red: #ff0505;
-    --blue: #2d62ff;
-    --bright-blue: #0028ff;
-    --green: #5eff44;
-    --bright-green: #03f500;
-    --yellow: #efc603;
-    --bright-yellow: #fffd10;
-
+:root {
+	--red: #f43636;
+	--bright-red: #ff0505;
+	--blue: #2d61ff;
+	--bright-blue: #0028ff;
+	--green: #5dff44;
+	--bright-green: #03f500;
+	--yellow: #efc803;
+	--bright-yellow: #fffd10;
 }
-.start-screen{
+.start-screen {
 	height: 80vh;
 	width: 57.5%;
 	background-color: var(--bright-red);
@@ -28,16 +27,17 @@ body{
 	z-index: 100;
 	text-align: center;
 	font-size: 1.3rem;
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
 	overflow: hidden;
 	border-radius: 5px;
 }
-.start-screen h1{
+.start-screen h1 {
 	margin-top: 15px auto;
 	position: relative;
 	top: 13.5%;
 }
-.start-screen p{
+.start-screen p {
 	margin: 15px auto;
 	line-height: 30px;
 	position: relative;
@@ -45,13 +45,13 @@ body{
 	font-weight: 600;
 }
 
-
-.start-screen button{
+.start-screen button {
 	padding: 25px 60px;
 	border-radius: 5px;
 	border: none;
 	background-color: var(--green);
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
 	font-size: 1.5rem;
 	font-weight: 500;
 	position: relative;
@@ -60,7 +60,7 @@ body{
 	cursor: pointer;
 }
 
-.start-screen button:hover{
+.start-screen button:hover {
 	background-color: var(--bright-green);
 }
 .container {
@@ -83,7 +83,7 @@ body{
 .yellow {
 	height: 100%;
 	width: 50%;
-    cursor: pointer;
+	cursor: pointer;
 	pointer-events: auto;
 }
 
@@ -100,27 +100,87 @@ body{
 	background: var(--yellow);
 }
 
-.red:hover{
-    background: var(--bright-red);
+.red:hover {
+	background: var(--bright-red);
 }
 
-.blue:hover{
-    background: var(--bright-blue);
-
+.blue:hover {
+	background: var(--bright-blue);
 }
 
-.green:hover{
-    background: var(--bright-green);
+.green:hover {
+	background: var(--bright-green);
+}
+
+.yellow:hover {
+	background: var(--bright-yellow);
+}
+
+/* javascript classes */
+@keyframes lightUpRedColor {
+	0% {
+		background-color: var(--red);
+		opacity: 0.5;
+	}
+
+	100%{
+		background-color: var(--bright-red);
+		opacity: 1;
+	}
+}
+@keyframes lightUpBlueColor {
+	0% {
+		background-color: var(--blue);
+		opacity: 0.5;
+	}
+
+	100%{
+		background-color: var(--bright-blue);
+		opacity: 1;
+	}
+}
+@keyframes lightUpGreenColor {
+	0% {
+		background-color: var(--green);
+		opacity: 0.5;
+
+	}
+
+	100%{
+		background-color: var(--bright-green);
+		opacity: 1;
+	}
+}
+@keyframes lightUpYellowColor {
+	0% {
+		background-color: var(--yellow);
+		opacity: 0.5;
+
+	}
+
+	100%{
+		background-color: var(--bright-yellow);
+		opacity: 1;
+	}
+}
+
+.bright-up-red{
+	background-color: var(--red);
+	animation: lightUpRedColor 2.5s infinite alternate;
+}
+
+.bright-up-blue{
+	background-color: var(--blue);
+	animation: lightUpBlueColor 2s infinite alternate;
 }
 
 
-.yellow:hover{
-    background: var(--bright-yellow);
+.bright-up-green{
+	background-color: var(--green);
+	animation: lightUpGreenColor 2s infinite alternate;
 }
 
-
-
-
-
-
-/* javascript classes \*
+.bright-up-yellow{
+	background-color: var(--yellow);
+	animation:  lightUpYellowColor 2s infinite alternate;
+}
