@@ -9,12 +9,14 @@ body {
 }
 :root {
 	--red: #f43636;
+	--dim-red: #f43636d4;
 	--bright-red: #ff0505;
-	--blue: #2d61ff;
+	--dim-blue: #2d61ffd1;
 	--bright-blue: #0028ff;
 	--green: #5dff44;
+	--dim-green: #5dff44c7;
 	--bright-green: #03f500;
-	--yellow: #efc803;
+	--dim-yellow: #efc803c6;
 	--bright-yellow: #fffd10;
 }
 .start-screen {
@@ -41,7 +43,7 @@ body {
 	margin: 15px auto;
 	line-height: 30px;
 	position: relative;
-	top: 20%;
+	top: 17%;
 	font-weight: 600;
 }
 
@@ -55,7 +57,7 @@ body {
 	font-size: 1.5rem;
 	font-weight: 500;
 	position: relative;
-	top: 25%;
+	top: 20%;
 	margin: auto;
 	cursor: pointer;
 }
@@ -88,16 +90,16 @@ body {
 }
 
 .red {
-	background: var(--red);
+	background: var(--dim-red);
 }
 .blue {
-	background: var(--blue);
+	background: var(--dim-blue);
 }
 .green {
-	background: var(--green);
+	background: var(--dim-green);
 }
 .yellow {
-	background: var(--yellow);
+	background: var(--dim-yellow);
 }
 
 .red:hover {
@@ -119,68 +121,65 @@ body {
 /* javascript classes */
 @keyframes lightUpRedColor {
 	0% {
-		background-color: var(--red);
+		background-color: var(--dim-red);
 		opacity: 0.5;
 	}
 
-	100%{
+	100% {
 		background-color: var(--bright-red);
 		opacity: 1;
 	}
 }
 @keyframes lightUpBlueColor {
 	0% {
-		background-color: var(--blue);
+		background-color: var(--dim-blue);
 		opacity: 0.5;
 	}
 
-	100%{
+	100% {
 		background-color: var(--bright-blue);
 		opacity: 1;
 	}
 }
 @keyframes lightUpGreenColor {
 	0% {
-		background-color: var(--green);
+		background-color: var(--dim-green);
 		opacity: 0.5;
-
 	}
 
-	100%{
+	100% {
 		background-color: var(--bright-green);
 		opacity: 1;
 	}
 }
 @keyframes lightUpYellowColor {
 	0% {
-		background-color: var(--yellow);
+		background-color: var(--dim-yellow);
 		opacity: 0.5;
-
 	}
 
-	100%{
+	100% {
 		background-color: var(--bright-yellow);
 		opacity: 1;
 	}
 }
 
-.bright-up-red{
-	background-color: var(--red);
-	animation: lightUpRedColor 2.5s infinite alternate;
+.bright-up-red {
+	background-color: var(--dim-red);
+	animation: lightUpRedColor 2s 1 alternate;
 }
 
-.bright-up-blue{
-	background-color: var(--blue);
-	animation: lightUpBlueColor 2s infinite alternate;
+.bright-up-blue {
+	background-color: var(--dim-blue);
+	animation: lightUpBlueColor 2s 1 alternate;
 }
 
-
-.bright-up-green{
-	background-color: var(--green);
-	animation: lightUpGreenColor 2s infinite alternate;
+.bright-up-green {
+	background-color: var(--dim-green);
+	animation: lightUpGreenColor 2s 1 alternate;
 }
 
-.bright-up-yellow{
-	background-color: var(--yellow);
-	animation:  lightUpYellowColor 2s infinite alternate;
+.bright-up-yellow {
+	background-color: var(--dim-yellow);
+	animation: lightUpYellowColor 2s 1 alternate;
 }

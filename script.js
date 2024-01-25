@@ -6,6 +6,35 @@ const colorGreen = document.querySelector(".green");
 const colors = [colorRed, colorBlue, colorYellow, colorGreen];
 let colorSequence = [];
 
+const audiosList = [
+	"Sounds-effects/Beap-sound1.mp3",
+	"Sounds-effects/Beap-sound2.mp3",
+	"Sounds-effects/Beap-sound3.mp3",
+	"Sounds-effects/Beap-sound4.mp3",
+	"Sounds-effects/Beap-sound5.mp3",
+	"Sounds-effects/Beap-sound6.mp3",
+];
+
+const createNewAudio = (audioPath) => {
+	return new Audio(audioPath);
+};
+
+const playAudio = (audio) => {
+	audio.play();
+};
+
+
+
+function getRandomAudio (){
+	const randomIndex = Math.floor(Math.random() * audiosList.length);
+	return audiosList[randomIndex];
+}
+
+function playRandomAudio(){
+	const randomAudioPath = getRandomAudio();
+	const audio = createNewAudio(randomAudioPath)
+	playAudio(audio)
+}
 let activeBrighter = false;
 
 // this removes the start menu before you start
@@ -13,7 +42,7 @@ function startScreen() {
 	const startButton = document.getElementById("startButton");
 	const startMenu = document.querySelector(".start-screen");
 	const container = document.querySelector(".container");
-
+	
 	const handleMouseOut = () => {
 		for (const color of colors) {
 			color.style.pointerEvents = "none";
@@ -32,6 +61,7 @@ function startScreen() {
 		activeBrighter = true;
 
 		if (activeBrighter === true) {
+			playRandomAudio()
 			firstColorPick();
 			console.log(colorSequence);
 		}
