@@ -5,6 +5,7 @@ const colorGreen = document.querySelector(".green");
 
 const colors = [colorRed, colorBlue, colorYellow, colorGreen];
 let colorSequence = [];
+let userChoice = [];
 
 const audiosList = [
 	"Sounds-effects/Beap-sound1.mp3",
@@ -19,21 +20,17 @@ const createNewAudio = (audioPath) => {
 	return new Audio(audioPath);
 };
 
-const playAudio = (audio) => {
-	audio.play();
-};
+const playAudio = (audio) => audio.play();
 
-
-
-function getRandomAudio (){
+function getRandomAudio() {
 	const randomIndex = Math.floor(Math.random() * audiosList.length);
 	return audiosList[randomIndex];
 }
 
-function playRandomAudio(){
+function playRandomAudio() {
 	const randomAudioPath = getRandomAudio();
-	const audio = createNewAudio(randomAudioPath)
-	playAudio(audio)
+	const audio = createNewAudio(randomAudioPath);
+	playAudio(audio);
 }
 let activeBrighter = false;
 
@@ -42,11 +39,15 @@ function startScreen() {
 	const startButton = document.getElementById("startButton");
 	const startMenu = document.querySelector(".start-screen");
 	const container = document.querySelector(".container");
-	
+
 	const handleMouseOut = () => {
 		for (const color of colors) {
 			color.style.pointerEvents = "none";
 		}
+	};
+
+	const firstColorClick = (click) => {
+		return null;
 	};
 
 	container.addEventListener("mouseout", handleMouseOut);
@@ -61,9 +62,30 @@ function startScreen() {
 		activeBrighter = true;
 
 		if (activeBrighter === true) {
-			playRandomAudio()
-			firstColorPick();
-			console.log(colorSequence);
+			setTimeout(() => {
+				disableHoverEffect();
+				playRandomAudio();
+				firstColorPick();
+				console.log(colorSequence)
+				
+			}, 1000);
+			for (const color of colors) {
+				color.addEventListener("click", (click) =>{
+					const userColor = click.target.className;
+					if(userColor === 'green'){
+						console.log("green")
+					}
+					if(userColor === 'red'){
+						console.log('red');
+					}
+					if(userColor === 'blue'){
+						console.log('blue')
+					}
+					if(userColor === 'yellow'){
+						console.log('yellow')
+					}
+				});
+			}
 		}
 	});
 }
@@ -82,16 +104,28 @@ function firstColorPick() {
 	switch (colorClassName) {
 		case "green":
 			colorGreen.classList.add("bright-up-green");
+			setTimeout(() => {
+				colorGreen.classList.remove('bright-up-green')
+			}, 2500);
 			break;
 		case "red":
 			colorRed.classList.add("bright-up-red");
+			setTimeout(() => {
+				colorRed.classList.remove('bright-up-red')
+			}, 2500);
 			break;
 		case "blue":
 			colorBlue.classList.add("bright-up-blue");
+			setTimeout(() => {
+				colorBlue.classList.remove('bright-up-blue')
+			}, 2700);
 
 			break;
 		case "yellow":
 			colorYellow.classList.add("bright-up-yellow");
+			setTimeout(() => {
+				colorYellow.classList.remove('bright-up-yellow')
+			}, 2500);
 
 			break;
 		default:
@@ -103,3 +137,16 @@ function firstColorPick() {
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
 function pickColorRandomly() {}
+
+// disables hover effect for a certain time
+function disableHoverEffect() {
+	for (const color of colors) {
+		color.style.pointerEvents = "none";
+	}
+
+	setTimeout(() => {
+		for (const color of colors) {
+			color.style.pointerEvents = "auto";
+		}
+	}, 2500);
+}
