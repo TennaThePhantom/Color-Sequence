@@ -32,6 +32,18 @@ function playRandomAudio() {
 	const audio = createNewAudio(randomAudioPath);
 	playAudio(audio);
 }
+function disableHoverEffect() {
+	for (const color of colors) {
+		color.style.pointerEvents = "none";
+	}
+
+	setTimeout(() => {
+		for (const color of colors) {
+			color.style.pointerEvents = "auto";
+		}
+	}, 2500);
+}
+
 let activeBrighter = false;
 
 // this removes the start menu before you start
@@ -46,9 +58,6 @@ function startScreen() {
 		}
 	};
 
-	const firstColorClick = (click) => {
-		return null;
-	};
 
 	container.addEventListener("mouseout", handleMouseOut);
 
@@ -66,30 +75,46 @@ function startScreen() {
 				disableHoverEffect();
 				playRandomAudio();
 				firstColorPick();
+				firstUserClick();
 				console.log(colorSequence)
 				
 			}, 1000);
-			for (const color of colors) {
-				color.addEventListener("click", (click) =>{
-					const userColor = click.target.className;
-					if(userColor === 'green'){
-						console.log("green")
-					}
-					if(userColor === 'red'){
-						console.log('red');
-					}
-					if(userColor === 'blue'){
-						console.log('blue')
-					}
-					if(userColor === 'yellow'){
-						console.log('yellow')
-					}
-				});
-			}
+		
 		}
 	});
 }
 
+// the first choice of user to see if game continues or not
+function firstUserClick(){
+	for (const color of colors) {
+		color.addEventListener("click", (click) =>{
+			const userColor = click.target.className;
+			if(userColor === 'green'){
+				console.log("green")
+				userChoice.push(userColor)
+				console.log(userChoice)
+			}
+			else if(userColor === 'red'){
+				console.log('red');
+				userChoice.push(userColor)
+				console.log(userChoice)
+			}
+			else if(userColor === 'blue'){
+				console.log('blue')
+				userChoice.push(userColor)
+				console.log(userChoice)
+			}
+			else if(userColor === 'yellow'){
+				console.log('blue')
+				userChoice.push(userColor)
+				console.log(userChoice)
+			}
+			else{
+				console.log("Error")
+			}
+		});
+	}
+}
 startScreen();
 
 // gets the first color for colorSequence
@@ -139,14 +164,3 @@ if person gets the first color correct this function actives to add another colo
 function pickColorRandomly() {}
 
 // disables hover effect for a certain time
-function disableHoverEffect() {
-	for (const color of colors) {
-		color.style.pointerEvents = "none";
-	}
-
-	setTimeout(() => {
-		for (const color of colors) {
-			color.style.pointerEvents = "auto";
-		}
-	}, 2500);
-}
