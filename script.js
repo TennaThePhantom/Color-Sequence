@@ -32,7 +32,10 @@ function playRandomAudio() {
 	const audio = createNewAudio(randomAudioPath);
 	playAudio(audio);
 }
-function disableHoverEffect() {
+
+// disables hover effect for a certain time
+
+function disableHoverEffect(timer) {
 	for (const color of colors) {
 		color.style.pointerEvents = "none";
 	}
@@ -41,10 +44,10 @@ function disableHoverEffect() {
 		for (const color of colors) {
 			color.style.pointerEvents = "auto";
 		}
-	}, 2500);
+	}, timer);
 }
 
-let activeBrighter = false;
+let activeGame = false;
 
 // this removes the start menu before you start
 function startScreen() {
@@ -58,59 +61,50 @@ function startScreen() {
 		}
 	};
 
-
 	container.addEventListener("mouseout", handleMouseOut);
 
 	startButton.addEventListener("click", () => {
 		startMenu.style.display = "none";
 		container.style.opacity = "1";
-		container.removeEventListener("mouseout", handleMouseOut);
-		for (const color of colors) {
-			color.style.pointerEvents = "auto";
-		}
-		activeBrighter = true;
 
-		if (activeBrighter === true) {
+		container.removeEventListener("mouseout", handleMouseOut);
+		activeGame = true;
+
+		if (activeGame === true) {
+			disableHoverEffect(3000);
 			setTimeout(() => {
-				disableHoverEffect();
 				playRandomAudio();
 				firstColorPick();
 				firstUserClick();
-				console.log(colorSequence)
-				
+				console.log(colorSequence);
 			}, 1000);
-		
 		}
 	});
 }
 
 // the first choice of user to see if game continues or not
-function firstUserClick(){
+function firstUserClick() {
 	for (const color of colors) {
-		color.addEventListener("click", (click) =>{
+		color.addEventListener("click", (click) => {
 			const userColor = click.target.className;
-			if(userColor === 'green'){
-				console.log("green")
-				userChoice.push(userColor)
-				console.log(userChoice)
-			}
-			else if(userColor === 'red'){
-				console.log('red');
-				userChoice.push(userColor)
-				console.log(userChoice)
-			}
-			else if(userColor === 'blue'){
-				console.log('blue')
-				userChoice.push(userColor)
-				console.log(userChoice)
-			}
-			else if(userColor === 'yellow'){
-				console.log('blue')
-				userChoice.push(userColor)
-				console.log(userChoice)
-			}
-			else{
-				console.log("Error")
+			if (userColor === "green") {
+				console.log("green");
+				userChoice.push(userColor);
+				console.log(userChoice);
+			} else if (userColor === "red") {
+				console.log("red");
+				userChoice.push(userColor);
+				console.log(userChoice);
+			} else if (userColor === "blue") {
+				console.log("blue");
+				userChoice.push(userColor);
+				console.log(userChoice);
+			} else if (userColor === "yellow") {
+				console.log("blue");
+				userChoice.push(userColor);
+				console.log(userChoice);
+			} else {
+				console.log("Error");
 			}
 		});
 	}
@@ -130,26 +124,26 @@ function firstColorPick() {
 		case "green":
 			colorGreen.classList.add("bright-up-green");
 			setTimeout(() => {
-				colorGreen.classList.remove('bright-up-green')
+				colorGreen.classList.remove("bright-up-green");
 			}, 2500);
 			break;
 		case "red":
 			colorRed.classList.add("bright-up-red");
 			setTimeout(() => {
-				colorRed.classList.remove('bright-up-red')
+				colorRed.classList.remove("bright-up-red");
 			}, 2500);
 			break;
 		case "blue":
 			colorBlue.classList.add("bright-up-blue");
 			setTimeout(() => {
-				colorBlue.classList.remove('bright-up-blue')
-			}, 2700);
+				colorBlue.classList.remove("bright-up-blue");
+			}, 2500);
 
 			break;
 		case "yellow":
 			colorYellow.classList.add("bright-up-yellow");
 			setTimeout(() => {
-				colorYellow.classList.remove('bright-up-yellow')
+				colorYellow.classList.remove("bright-up-yellow");
 			}, 2500);
 
 			break;
@@ -162,5 +156,3 @@ function firstColorPick() {
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
 function pickColorRandomly() {}
-
-// disables hover effect for a certain time
