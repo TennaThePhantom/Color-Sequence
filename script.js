@@ -1,3 +1,4 @@
+// global Variables
 const colorRed = document.querySelector(".red");
 const colorBlue = document.querySelector(".blue");
 const colorYellow = document.querySelector(".yellow");
@@ -6,6 +7,7 @@ const colorGreen = document.querySelector(".green");
 const colors = [colorRed, colorBlue, colorYellow, colorGreen];
 let colorSequence = [];
 let userChoice = [];
+let activeGame = false;
 
 const audiosList = [
 	"Sounds-effects/Beap-sound1.mp3",
@@ -34,7 +36,6 @@ function playRandomAudio() {
 }
 
 // disables hover effect for a certain time
-
 function disableHoverEffect(timer) {
 	for (const color of colors) {
 		color.style.pointerEvents = "none";
@@ -46,8 +47,6 @@ function disableHoverEffect(timer) {
 		}
 	}, timer);
 }
-
-let activeGame = false;
 
 // this removes the start menu before you start
 function startScreen() {
@@ -70,6 +69,7 @@ function startScreen() {
 		container.removeEventListener("mouseout", handleMouseOut);
 		activeGame = true;
 
+		// starts game(for now)
 		if (activeGame === true) {
 			disableHoverEffect(3000);
 			setTimeout(() => {
@@ -88,28 +88,34 @@ function firstUserClick() {
 		color.addEventListener("click", (click) => {
 			const userColor = click.target.className;
 			if (userColor === "green") {
-				console.log("green");
+				console.log("User Pick Green");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "red") {
-				console.log("red");
+				console.log("User Pick Red");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "blue") {
-				console.log("blue");
+				console.log("User Pick Blue");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "yellow") {
-				console.log("blue");
+				console.log("User Pick Yellow");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else {
 				console.log("Error");
 			}
+			if (userChoice[0] == colorSequence[0]) {
+				generateMoreColors = true;
+				pickColorRandomly(generateMoreColors);
+			} else {
+				generateMoreColors = false;
+				pickColorRandomly(generateMoreColors);
+			}
 		});
 	}
 }
-startScreen();
 
 // gets the first color for colorSequence
 function firstColorPick() {
@@ -155,4 +161,65 @@ function firstColorPick() {
 /*
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
-function pickColorRandomly() {}
+function pickColorRandomly(generateMoreColors) {
+	if (generateMoreColors === true) {
+		colorDelay = 2500;
+		pickAnotherColor = false;
+		while (generateMoreColors === true) {
+			if (pickAnotherColor === false) {
+				colorPicker();
+				pickAnotherColor = true;
+				console.log(colorSequence);
+				break
+			}
+		}
+	} else {
+		console.log("Game Over");
+	}
+}
+
+// This will continue picking colors randomly
+function colorPicker() {
+	const min = 0;
+	const max = 3;
+	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
+	let randomColor = colors[randomFirstColor];
+	let colorClassName = randomColor.className;
+	console.log("The color that was picked is " + colorClassName);
+	colorSequence.push(colorClassName);
+
+	/* Will need this for future in different function or same but need somes changes
+	switch (colorClassName) {
+		case "green":
+			colorGreen.classList.add("bright-up-green");
+			setTimeout(() => {
+				colorGreen.classList.remove("bright-up-green");
+			}, timer);
+			break;
+		case "red":
+			colorRed.classList.add("bright-up-red");
+			setTimeout(() => {
+				colorRed.classList.remove("bright-up-red");
+			}, timer);
+			break;
+		case "blue":
+			colorBlue.classList.add("bright-up-blue");
+			setTimeout(() => {
+				colorBlue.classList.remove("bright-up-blue");
+			}, timer);
+
+			break;
+		case "yellow":
+			colorYellow.classList.add("bright-up-yellow");
+			setTimeout(() => {
+				colorYellow.classList.remove("bright-up-yellow");
+			}, timer);
+
+			break;
+		default:
+			break;
+	}
+	*/
+}
+
+startScreen();
