@@ -227,9 +227,9 @@ function activeColor(color, previousColor, previousColorCount) {
 				}, 2500);
 				break;
 			case "blue":
-				colorBlue.classList.add("bright-up-blue"); // Corrected
+				colorBlue.classList.add("bright-up-blue"); 
 				setTimeout(() => {
-					colorBlue.classList.remove("bright-up-blue"); // Corrected
+					colorBlue.classList.remove("bright-up-blue");
 				}, 2500);
 				break;
 			case "yellow":
