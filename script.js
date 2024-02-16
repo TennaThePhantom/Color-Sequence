@@ -162,15 +162,36 @@ function firstColorPick() {
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
 function pickColorRandomly(generateMoreColors) {
+	colorDelay = 2500;
+	colorDelayMultiplier = 1;
+	pickAnotherColor = false;
+	previousColor = null;
+	previousColorCount = 0;
+	colorCount = 1;
 	if (generateMoreColors === true) {
-		colorDelay = 2500;
-		pickAnotherColor = false;
-		while (generateMoreColors === true) {
-			if (pickAnotherColor === false) {
-				colorPicker();
-				pickAnotherColor = true;
-				console.log(colorSequence);
-				break
+		if (pickAnotherColor === false) {
+			colorPicker();
+			pickAnotherColor = true;
+			console.log(colorSequence);
+		}
+		if (pickAnotherColor === true) {
+			for (const color of colorSequence) {
+				setTimeout(() => {
+					console.log(colorCount);
+					console.log("The color is " + color);
+					if (color === previousColor) {
+						previousColor = true;
+						previousColorCount += 1;
+						activeColor(color, previousColor, previousColorCount);
+					} else {
+						previousColor = false;
+						activeColor(color, previousColor, previousColorCount);
+						playRandomAudio();
+					}
+					previousColor = color;
+					colorCount += 1;
+				}, 2500 * colorDelayMultiplier); // loop through each color with delay
+				colorDelayMultiplier++;
 			}
 		}
 	} else {
@@ -187,39 +208,63 @@ function colorPicker() {
 	let colorClassName = randomColor.className;
 	console.log("The color that was picked is " + colorClassName);
 	colorSequence.push(colorClassName);
+}
 
-	/* Will need this for future in different function or same but need somes changes
-	switch (colorClassName) {
-		case "green":
-			colorGreen.classList.add("bright-up-green");
-			setTimeout(() => {
-				colorGreen.classList.remove("bright-up-green");
-			}, timer);
-			break;
-		case "red":
-			colorRed.classList.add("bright-up-red");
-			setTimeout(() => {
-				colorRed.classList.remove("bright-up-red");
-			}, timer);
-			break;
-		case "blue":
-			colorBlue.classList.add("bright-up-blue");
-			setTimeout(() => {
-				colorBlue.classList.remove("bright-up-blue");
-			}, timer);
-
-			break;
-		case "yellow":
-			colorYellow.classList.add("bright-up-yellow");
-			setTimeout(() => {
-				colorYellow.classList.remove("bright-up-yellow");
-			}, timer);
-
-			break;
-		default:
-			break;
+function activeColor(color, previousColor, previousColorCount) {
+	colorName = color;
+	if (previousColor === false) {
+		switch (colorName) {
+			case "green":
+				colorGreen.classList.add("bright-up-green");
+				setTimeout(() => {
+					colorGreen.classList.remove("bright-up-green");
+				}, 2500);
+				break;
+			case "red":
+				colorRed.classList.add("bright-up-red");
+				setTimeout(() => {
+					colorRed.classList.remove("bright-up-red");
+				}, 2500);
+				break;
+			case "blue":
+				colorBlue.classList.add("bright-up-blue"); // Corrected
+				setTimeout(() => {
+					colorBlue.classList.remove("bright-up-blue"); // Corrected
+				}, 2500);
+				break;
+			case "yellow":
+				colorYellow.classList.add("bright-up-yellow");
+				setTimeout(() => {
+					colorYellow.classList.remove("bright-up-yellow");
+				}, 2500);
+				break;
+			default:
+				break;
+		}
 	}
-	*/
+	if (previousColor === true) {
+		// working
+		if (colorName === "red") {
+			previousColorName = colorName;
+			newColorName = `${previousColorName}${previousColorCount}`;
+			console.log(`This had two colors in a row ${newColorName}`);
+		}
+		if (colorName === "green") {
+			previousColorName = colorName;
+			newColorName = `${previousColorName}${previousColorCount}`;
+			console.log(`This had two colors in a row ${newColorName}`);
+		}
+		if (colorName === "yellow") {
+			previousColorName = colorName;
+			newColorName = `${previousColorName}${previousColorCount}`;
+			console.log(`This had two colors in a row ${newColorName}`);
+		}
+		if (colorName === "blue") {
+			previousColorName = colorName;
+			newColorName = `${previousColorName}${previousColorCount}`;
+			console.log(`This had two colors in a row ${newColorName}`);
+		}
+	}
 }
 
 startScreen();
