@@ -120,7 +120,7 @@ function firstUserClick() {
 // gets the first color for colorSequence
 function firstColorPick() {
 	const min = 0;
-	const max = 3;
+	const max = 1;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
 	let colorClassName = randomColor.className;
@@ -202,7 +202,7 @@ function pickColorRandomly(generateMoreColors) {
 // This will continue picking colors randomly
 function colorPicker() {
 	const min = 0;
-	const max = 3;
+	const max = 1;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
 	let colorClassName = randomColor.className;
@@ -211,7 +211,7 @@ function colorPicker() {
 }
 
 function activeColor(color, previousColor, previousColorCount) {
-	colorName = color;
+	const colorName = color;
 	if (previousColor === false) {
 		switch (colorName) {
 			case "green":
@@ -227,7 +227,7 @@ function activeColor(color, previousColor, previousColorCount) {
 				}, 2500);
 				break;
 			case "blue":
-				colorBlue.classList.add("bright-up-blue"); 
+				colorBlue.classList.add("bright-up-blue");
 				setTimeout(() => {
 					colorBlue.classList.remove("bright-up-blue");
 				}, 2500);
@@ -244,25 +244,28 @@ function activeColor(color, previousColor, previousColorCount) {
 	}
 	if (previousColor === true) {
 		// working
-		if (colorName === "red") {
-			previousColorName = colorName;
-			newColorName = `${previousColorName}${previousColorCount}`;
-			console.log(`This had two colors in a row ${newColorName}`);
+		const previousColorName = colorName;
+		const newColorName = `${previousColorName}${previousColorCount}`;
+		const lastColorIndex = colorSequence.length - 1;
+
+		switch (colorName) {
+			case "red":
+			case "green":
+			case "yellow":
+			case "blue":
+				colorSequence[lastColorIndex] = newColorName;
+				console.log("The new colorSequence Array " + colorSequence);
+				break;
+			default:
+				break;
 		}
-		if (colorName === "green") {
-			previousColorName = colorName;
-			newColorName = `${previousColorName}${previousColorCount}`;
-			console.log(`This had two colors in a row ${newColorName}`);
-		}
-		if (colorName === "yellow") {
-			previousColorName = colorName;
-			newColorName = `${previousColorName}${previousColorCount}`;
-			console.log(`This had two colors in a row ${newColorName}`);
-		}
-		if (colorName === "blue") {
-			previousColorName = colorName;
-			newColorName = `${previousColorName}${previousColorCount}`;
-			console.log(`This had two colors in a row ${newColorName}`);
+		if (
+			colorSequence[lastColorIndex] === `red${previousColorCount}` ||
+			colorSequence[lastColorIndex] === `green${previousColorCount}` ||
+			colorSequence[lastColorIndex] === `yellow${previousColorCount}` ||
+			colorSequence[lastColorIndex] === `blue${previousColorCount}`
+		) {
+			console.log("checking for last color with number works " + newColorName);
 		}
 	}
 }
