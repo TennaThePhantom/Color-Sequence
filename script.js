@@ -119,7 +119,7 @@ function firstUserClick() {
 
 // gets the first color for colorSequence
 function firstColorPick() {
-	const min = 0;
+	const min = 1;
 	const max = 1;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
@@ -165,8 +165,6 @@ function pickColorRandomly(generateMoreColors) {
 	colorDelay = 2500;
 	colorDelayMultiplier = 1;
 	pickAnotherColor = false;
-	previousColor = null;
-	previousColorCount = 0;
 	colorCount = 1;
 	if (generateMoreColors === true) {
 		if (pickAnotherColor === false) {
@@ -179,17 +177,7 @@ function pickColorRandomly(generateMoreColors) {
 				setTimeout(() => {
 					console.log(colorCount);
 					console.log("The color is " + color);
-					if (color === previousColor) {
-						previousColor = true;
-						previousColorCount += 1;
-						activeColor(color, previousColor, previousColorCount);
-					} else {
-						previousColor = false;
-						activeColor(color, previousColor, previousColorCount);
-						playRandomAudio();
-					}
-					previousColor = color;
-					colorCount += 1;
+					activeColor(color)
 				}, 2500 * colorDelayMultiplier); // loop through each color with delay
 				colorDelayMultiplier++;
 			}
@@ -201,7 +189,7 @@ function pickColorRandomly(generateMoreColors) {
 
 // This will continue picking colors randomly
 function colorPicker() {
-	const min = 0;
+	const min = 1;
 	const max = 1;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
@@ -210,63 +198,23 @@ function colorPicker() {
 	colorSequence.push(colorClassName);
 }
 
-function activeColor(color, previousColor, previousColorCount) {
-	const colorName = color;
-	if (previousColor === false) {
-		switch (colorName) {
-			case "green":
-				colorGreen.classList.add("bright-up-green");
-				setTimeout(() => {
-					colorGreen.classList.remove("bright-up-green");
-				}, 2500);
-				break;
-			case "red":
-				colorRed.classList.add("bright-up-red");
-				setTimeout(() => {
-					colorRed.classList.remove("bright-up-red");
-				}, 2500);
-				break;
-			case "blue":
-				colorBlue.classList.add("bright-up-blue");
-				setTimeout(() => {
-					colorBlue.classList.remove("bright-up-blue");
-				}, 2500);
-				break;
-			case "yellow":
-				colorYellow.classList.add("bright-up-yellow");
-				setTimeout(() => {
-					colorYellow.classList.remove("bright-up-yellow");
-				}, 2500);
-				break;
-			default:
-				break;
-		}
-	}
-	if (previousColor === true) {
-		// working
-		const previousColorName = colorName;
-		const newColorName = `${previousColorName}${previousColorCount}`;
-		const lastColorIndex = colorSequence.length - 1;
-
-		switch (colorName) {
-			case "red":
-			case "green":
-			case "yellow":
-			case "blue":
-				colorSequence[lastColorIndex] = newColorName;
-				console.log("The new colorSequence Array " + colorSequence);
-				break;
-			default:
-				break;
-		}
-		if (
-			colorSequence[lastColorIndex] === `red${previousColorCount}` ||
-			colorSequence[lastColorIndex] === `green${previousColorCount}` ||
-			colorSequence[lastColorIndex] === `yellow${previousColorCount}` ||
-			colorSequence[lastColorIndex] === `blue${previousColorCount}`
-		) {
-			console.log("checking for last color with number works " + newColorName);
-		}
+function activeColor(color) {
+	switch (color) {
+		case "red":
+		case "green":
+		case "blue":
+		case "yellow":
+			playRandomAudio()
+			setTimeout(() => {
+				colorBlue.classList.add(`bright-up-${color}`);
+			}, 100);
+			setTimeout(() => {
+				colorBlue.classList.remove(`bright-up-${color}`);
+			}, 2500);
+			break;
+		default:
+			// Handle other cases if needed
+			break;
 	}
 }
 
