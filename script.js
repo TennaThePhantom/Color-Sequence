@@ -4,6 +4,10 @@ const colorBlue = document.querySelector(".blue");
 const colorYellow = document.querySelector(".yellow");
 const colorGreen = document.querySelector(".green");
 
+const startButton = document.getElementById("startButton");
+const startMenu = document.querySelector(".start-screen");
+const container = document.querySelector(".container");
+let userFirstColorClicked = false;
 const colors = [colorRed, colorBlue, colorYellow, colorGreen];
 let colorSequence = [];
 let userChoice = [];
@@ -50,10 +54,6 @@ function disableHoverEffect(timer) {
 
 // this removes the start menu before you start
 function startScreen() {
-	const startButton = document.getElementById("startButton");
-	const startMenu = document.querySelector(".start-screen");
-	const container = document.querySelector(".container");
-
 	const handleMouseOut = () => {
 		for (const color of colors) {
 			color.style.pointerEvents = "none";
@@ -84,36 +84,48 @@ function startScreen() {
 
 // the first choice of user to see if game continues or not
 function firstUserClick() {
-	for (const color of colors) {
-		color.addEventListener("click", (click) => {
-			const userColor = click.target.className;
+	const handleFirstClick = (click) => {
+		const userColor = click.target.className;
+		let userFirstClickedHappen = false;
+		if (userFirstClickedHappen === false) {
 			if (userColor === "green") {
-				console.log("User Pick Green");
+				console.log("First clicked User Pick Green");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "red") {
-				console.log("User Pick Red");
+				console.log("First clicked User Pick Red");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "blue") {
-				console.log("User Pick Blue");
+				console.log("First clicked User Pick Blue");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else if (userColor === "yellow") {
-				console.log("User Pick Yellow");
+				console.log("First clicked User Pick Yellow");
 				userChoice.push(userColor);
 				console.log(userChoice);
 			} else {
 				console.log("Error");
 			}
+			colors.forEach((color) => {
+				color.removeEventListener("click", handleFirstClick);
+			});
+			userFirstClickedHappen = true;
+
 			if (userChoice[0] == colorSequence[0]) {
 				generateMoreColors = true;
 				pickColorRandomly(generateMoreColors);
+				setTimeout(() => {
+					container.removeEventListener("mouseover", startScreen());
+				}, 10);
 			} else {
 				generateMoreColors = false;
 				pickColorRandomly(generateMoreColors);
 			}
-		});
+		}
+	};
+	for (const color of colors) {
+		color.addEventListener("click", handleFirstClick);
 	}
 }
 
@@ -167,6 +179,9 @@ function pickColorRandomly(generateMoreColors) {
 	pickAnotherColor = false;
 	colorCount = 1;
 	if (generateMoreColors === true) {
+		setTimeout(() => {
+			userClickingContinuous();
+		}, 6000);
 		if (pickAnotherColor === false) {
 			colorPicker();
 			pickAnotherColor = true;
@@ -177,7 +192,7 @@ function pickColorRandomly(generateMoreColors) {
 				setTimeout(() => {
 					console.log(colorCount);
 					console.log("The color is " + color);
-					activeColor(color)
+					activeColor(color);
 				}, 2500 * colorDelayMultiplier); // loop through each color with delay
 				colorDelayMultiplier++;
 			}
@@ -198,13 +213,14 @@ function colorPicker() {
 	colorSequence.push(colorClassName);
 }
 
+// actives whatever color is picked
 function activeColor(color) {
 	switch (color) {
 		case "red":
 		case "green":
 		case "blue":
 		case "yellow":
-			playRandomAudio()
+			playRandomAudio();
 			setTimeout(() => {
 				colorBlue.classList.add(`bright-up-${color}`);
 			}, 100);
@@ -215,6 +231,48 @@ function activeColor(color) {
 		default:
 			// Handle other cases if needed
 			break;
+	}
+}
+
+// if the user gets pass the first level this happens
+
+// if user gets all the color in correct pattern they go to next level < 1
+// if user clicks the wrong color in the pattern game over < 2
+
+function userClickingContinuous() {
+	const handleMouseOut = () => {
+		for (const color of colors) {
+			color.style.pointerEvents = "auto";
+		}
+	};
+
+	container.addEventListener("mouseout", handleMouseOut);
+
+	for (const color of colors) {
+		color.addEventListener("click", (click) => {
+			const userColor = click.target.className;
+			switch (userColor) {
+				case "red":
+					console.log("User picked Red");
+					userChoice.push(userColor);
+					break;
+				case "green":
+					console.log("User Pick Green");
+					userChoice.push(userColor);
+					break;
+				case "blue":
+					userChoice.push(userColor);
+					console.log("User pick Blue");
+					break;
+				case "yellow":
+					userChoice.push(userColor);
+					console.log("User pick yellow");
+
+					break;
+				default:
+					break;
+			}
+		});
 	}
 }
 
