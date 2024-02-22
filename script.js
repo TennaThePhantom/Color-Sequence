@@ -115,6 +115,7 @@ function firstUserClick() {
 			if (userChoice[0] == colorSequence[0]) {
 				generateMoreColors = true;
 				pickColorRandomly(generateMoreColors);
+				userChoice = [];
 				setTimeout(() => {
 					container.removeEventListener("mouseover", startScreen());
 				}, 10);
@@ -174,15 +175,16 @@ function firstColorPick() {
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
 function pickColorRandomly(generateMoreColors) {
-	colorDelay = 2500;
-	colorDelayMultiplier = 1;
-	pickAnotherColor = false;
-	colorCount = 1;
+	let colorDelay = 2500;
+	let colorDelayMultiplier = 1;
+	let pickAnotherColor = false;
+	let colorCount = 1;
 	if (generateMoreColors === true) {
 		setTimeout(() => {
 			userClickingContinuous();
 		}, 6000);
 		if (pickAnotherColor === false) {
+			colorPicker();
 			colorPicker();
 			pickAnotherColor = true;
 			console.log(colorSequence);
@@ -193,12 +195,13 @@ function pickColorRandomly(generateMoreColors) {
 					console.log(colorCount);
 					console.log("The color is " + color);
 					activeColor(color);
-				}, 2500 * colorDelayMultiplier); // loop through each color with delay
+					colorCount += 1;
+				}, colorDelay * colorDelayMultiplier); // loop through each color with delay
 				colorDelayMultiplier++;
 			}
 		}
 	} else {
-		console.log("Game Over");
+		console.log("Game Over"); // will add pop up screen
 	}
 }
 
@@ -267,10 +270,20 @@ function userClickingContinuous() {
 				case "yellow":
 					userChoice.push(userColor);
 					console.log("User pick yellow");
-
 					break;
 				default:
 					break;
+			}
+			if (colorSequence.length <= userChoice.length) {
+				for (
+					let colorInArray = 0;
+					colorInArray < colorSequence.length;
+					colorInArray++
+				) {
+					if (userChoice[colorInArray] !== colorSequence[colorInArray]) {
+						console.log("You clicked the wrong color at the wrong index ");
+					}
+				}
 			}
 		});
 	}
