@@ -185,7 +185,6 @@ function pickColorRandomly(generateMoreColors) {
 		}, 6000);
 		if (pickAnotherColor === false) {
 			colorPicker();
-			colorPicker();
 			pickAnotherColor = true;
 			console.log(colorSequence);
 		}
@@ -200,6 +199,7 @@ function pickColorRandomly(generateMoreColors) {
 				colorDelayMultiplier++;
 			}
 		}
+	
 	} else {
 		console.log("Game Over"); // will add pop up screen
 	}
@@ -258,35 +258,50 @@ function userClickingContinuous() {
 				case "red":
 					console.log("User picked Red");
 					userChoice.push(userColor);
+					checkUserClick();
 					break;
 				case "green":
 					console.log("User Pick Green");
 					userChoice.push(userColor);
+					checkUserClick();
 					break;
 				case "blue":
 					userChoice.push(userColor);
 					console.log("User pick Blue");
+					checkUserClick();
 					break;
 				case "yellow":
 					userChoice.push(userColor);
 					console.log("User pick yellow");
+					checkUserClick();
 					break;
 				default:
 					break;
 			}
-			if (colorSequence.length <= userChoice.length) {
-				for (
-					let colorInArray = 0;
-					colorInArray < colorSequence.length;
-					colorInArray++
-				) {
-					if (userChoice[colorInArray] !== colorSequence[colorInArray]) {
-						console.log("You clicked the wrong color at the wrong index ");
-					}
-				}
-			}
 		});
 	}
+}
+
+function checkUserClick() {
+	// Iterate over each color clicked by the user
+	for (let i = 0; i < userChoice.length; i++) {
+		// Check if the user's click matches the color sequence at the corresponding index
+		if (userChoice[i] !== colorSequence[i]) {
+			console.log("You clicked the wrong color at index " + i);
+			// Call game over function or perform game over actions here
+			return false; // Exit the function if the user's click doesn't match
+		}
+	}
+	// If all user clicks match the color sequence up to the current index
+	// Check if the user has completed the entire sequence
+	if (userChoice.length === colorSequence.length) {
+		// Do whatever you want when the user successfully completes the sequence
+		console.log("User completed the sequence!");
+		return true; // Exit the function indicating successful completion
+	}
+	// If the user clicks match the sequence up to the current index but haven't completed the entire sequence yet
+	// Continue listening for user clicks
+	return false;
 }
 
 startScreen();
