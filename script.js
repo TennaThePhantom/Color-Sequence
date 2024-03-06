@@ -199,7 +199,6 @@ function pickColorRandomly(generateMoreColors) {
 				colorDelayMultiplier++;
 			}
 		}
-	
 	} else {
 		console.log("Game Over"); // will add pop up screen
 	}
@@ -241,7 +240,6 @@ function activeColor(color) {
 
 // if user gets all the color in correct pattern they go to next level < 1
 // if user clicks the wrong color in the pattern game over < 2
-
 function userClickingContinuous() {
 	const handleMouseOut = () => {
 		for (const color of colors) {
@@ -251,35 +249,38 @@ function userClickingContinuous() {
 
 	container.addEventListener("mouseout", handleMouseOut);
 
-	for (const color of colors) {
-		color.addEventListener("click", (click) => {
-			const userColor = click.target.className;
-			switch (userColor) {
-				case "red":
-					console.log("User picked Red");
-					userChoice.push(userColor);
-					checkUserClick();
-					break;
-				case "green":
-					console.log("User Pick Green");
-					userChoice.push(userColor);
-					checkUserClick();
-					break;
-				case "blue":
-					userChoice.push(userColor);
-					console.log("User pick Blue");
-					checkUserClick();
-					break;
-				case "yellow":
-					userChoice.push(userColor);
-					console.log("User pick yellow");
-					checkUserClick();
-					break;
-				default:
-					break;
-			}
-		});
+	container.addEventListener("click", handleGameClicks);
+}
+
+function handleGameClicks(event) {
+	const userColor = event.target.className;
+	switch (userColor) {
+		case "red":
+			console.log("User picked Red");
+			userChoice.push(userColor);
+			checkUserClick();
+			break;
+		case "green":
+			console.log("User Pick Green");
+			userChoice.push(userColor);
+			checkUserClick();
+			break;
+		case "blue":
+			userChoice.push(userColor);
+			console.log("User pick Blue");
+			console.log(userChoice);
+			console.log("User choice is that ");
+			checkUserClick();
+			break;
+		case "yellow":
+			userChoice.push(userColor);
+			console.log("User pick yellow");
+			checkUserClick();
+			break;
+		default:
+			break;
 	}
+	continueGame();
 }
 
 function checkUserClick() {
@@ -288,20 +289,19 @@ function checkUserClick() {
 		// Check if the user's click matches the color sequence at the corresponding index
 		if (userChoice[i] !== colorSequence[i]) {
 			console.log("You clicked the wrong color at index " + i);
-			// Call game over function or perform game over actions here
 			return false; // Exit the function if the user's click doesn't match
 		}
 	}
-	// If all user clicks match the color sequence up to the current index
-	// Check if the user has completed the entire sequence
-	if (userChoice.length === colorSequence.length) {
-		// Do whatever you want when the user successfully completes the sequence
-		console.log("User completed the sequence!");
-		return true; // Exit the function indicating successful completion
-	}
-	// If the user clicks match the sequence up to the current index but haven't completed the entire sequence yet
-	// Continue listening for user clicks
-	return false;
 }
 
+function continueGame() {
+	if (userChoice.length === colorSequence.length) {
+		container.removeEventListener("click", handleGameClicks);
+		userChoice = [];
+		console.log(userChoice);
+		console.log("User choice is that ");
+		console.log("User completed the sequence!");
+		pickColorRandomly(true);
+	}
+}
 startScreen();
