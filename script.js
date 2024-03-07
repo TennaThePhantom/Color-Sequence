@@ -76,7 +76,6 @@ function startScreen() {
 				playRandomAudio();
 				firstColorPick();
 				firstUserClick();
-				console.log(colorSequence);
 			}, 1000);
 		}
 	});
@@ -89,21 +88,13 @@ function firstUserClick() {
 		let userFirstClickedHappen = false;
 		if (userFirstClickedHappen === false) {
 			if (userColor === "green") {
-				console.log("First clicked User Pick Green");
 				userChoice.push(userColor);
-				console.log(userChoice);
 			} else if (userColor === "red") {
-				console.log("First clicked User Pick Red");
 				userChoice.push(userColor);
-				console.log(userChoice);
 			} else if (userColor === "blue") {
-				console.log("First clicked User Pick Blue");
 				userChoice.push(userColor);
-				console.log(userChoice);
 			} else if (userColor === "yellow") {
-				console.log("First clicked User Pick Yellow");
 				userChoice.push(userColor);
-				console.log(userChoice);
 			} else {
 				console.log("Error");
 			}
@@ -132,12 +123,11 @@ function firstUserClick() {
 
 // gets the first color for colorSequence
 function firstColorPick() {
-	const min = 1;
-	const max = 1;
+	const min = 0;
+	const max = 3;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
 	let colorClassName = randomColor.className;
-	console.log("The first color is " + colorClassName);
 	colorSequence.push(colorClassName);
 	switch (colorClassName) {
 		case "green":
@@ -175,43 +165,53 @@ function firstColorPick() {
 if person gets the first color correct this function actives to add another color to colorSequence array
 */
 function pickColorRandomly(generateMoreColors) {
+	const handleMouseOut = () => {
+		for (const color of colors) {
+			color.style.pointerEvents = "none";
+		}
+	};
+
 	let colorDelay = 2500;
+	let hoverDelay = 3000;
+	if (colorSequence.length < 2) {
+		hoverDelay = 6000;
+	} else if (colorSequence.length >= 2 && colorSequence <= 5) {
+		hoverDelay = 4000;
+	} else {
+		hoverDelay = 3000;
+	}
+	let hoverDelayMultiplier = colorSequence.length;
 	let colorDelayMultiplier = 1;
 	let pickAnotherColor = false;
 	let colorCount = 1;
 	if (generateMoreColors === true) {
 		setTimeout(() => {
 			userClickingContinuous();
-		}, 6000);
+		}, hoverDelay * hoverDelayMultiplier);
 		if (pickAnotherColor === false) {
+			container.addEventListener("mouseout", handleMouseOut);
 			colorPicker();
 			pickAnotherColor = true;
-			console.log(colorSequence);
 		}
 		if (pickAnotherColor === true) {
 			for (const color of colorSequence) {
 				setTimeout(() => {
-					console.log(colorCount);
-					console.log("The color is " + color);
 					activeColor(color);
 					colorCount += 1;
 				}, colorDelay * colorDelayMultiplier); // loop through each color with delay
 				colorDelayMultiplier++;
 			}
 		}
-	} else {
-		console.log("Game Over"); // will add pop up screen
 	}
 }
 
 // This will continue picking colors randomly
 function colorPicker() {
-	const min = 1;
-	const max = 1;
+	const min = 0;
+	const max = 3;
 	let randomFirstColor = Math.floor(Math.random() * (max - min + 1)) + min;
 	let randomColor = colors[randomFirstColor];
 	let colorClassName = randomColor.className;
-	console.log("The color that was picked is " + colorClassName);
 	colorSequence.push(colorClassName);
 }
 
@@ -219,27 +219,46 @@ function colorPicker() {
 function activeColor(color) {
 	switch (color) {
 		case "red":
-		case "green":
+			playRandomAudio();
+			setTimeout(() => {
+				colorRed.classList.add("bright-up-red");
+			}, 100);
+			setTimeout(() => {
+				colorRed.classList.remove("bright-up-red");
+			}, 2500);
+			break;
 		case "blue":
+			playRandomAudio();
+			setTimeout(() => {
+				colorBlue.classList.add("bright-up-blue");
+			}, 100);
+			setTimeout(() => {
+				colorBlue.classList.remove("bright-up-blue");
+			}, 2500);
+			break;
+		case "green":
+			playRandomAudio();
+			setTimeout(() => {
+				colorGreen.classList.add("bright-up-green");
+			}, 100);
+			setTimeout(() => {
+				colorGreen.classList.remove("bright-up-blue");
+			}, 2500);
+			break;
 		case "yellow":
 			playRandomAudio();
 			setTimeout(() => {
-				colorBlue.classList.add(`bright-up-${color}`);
+				colorYellow.classList.add("bright-up-yellow");
 			}, 100);
 			setTimeout(() => {
-				colorBlue.classList.remove(`bright-up-${color}`);
+				colorYellow.classList.remove("bright-up-yellow");
 			}, 2500);
 			break;
 		default:
-			// Handle other cases if needed
 			break;
 	}
 }
 
-// if the user gets pass the first level this happens
-
-// if user gets all the color in correct pattern they go to next level < 1
-// if user clicks the wrong color in the pattern game over < 2
 function userClickingContinuous() {
 	const handleMouseOut = () => {
 		for (const color of colors) {
@@ -256,25 +275,19 @@ function handleGameClicks(event) {
 	const userColor = event.target.className;
 	switch (userColor) {
 		case "red":
-			console.log("User picked Red");
 			userChoice.push(userColor);
 			checkUserClick();
 			break;
 		case "green":
-			console.log("User Pick Green");
 			userChoice.push(userColor);
 			checkUserClick();
 			break;
 		case "blue":
 			userChoice.push(userColor);
-			console.log("User pick Blue");
-			console.log(userChoice);
-			console.log("User choice is that ");
 			checkUserClick();
 			break;
 		case "yellow":
 			userChoice.push(userColor);
-			console.log("User pick yellow");
 			checkUserClick();
 			break;
 		default:
@@ -288,8 +301,7 @@ function checkUserClick() {
 	for (let i = 0; i < userChoice.length; i++) {
 		// Check if the user's click matches the color sequence at the corresponding index
 		if (userChoice[i] !== colorSequence[i]) {
-			console.log("You clicked the wrong color at index " + i);
-			return false; // Exit the function if the user's click doesn't match
+			return false;
 		}
 	}
 }
@@ -298,9 +310,6 @@ function continueGame() {
 	if (userChoice.length === colorSequence.length) {
 		container.removeEventListener("click", handleGameClicks);
 		userChoice = [];
-		console.log(userChoice);
-		console.log("User choice is that ");
-		console.log("User completed the sequence!");
 		pickColorRandomly(true);
 	}
 }
