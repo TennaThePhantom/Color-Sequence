@@ -183,3 +183,27 @@ body {
 	background-color: var(--dim-yellow);
 	animation: lightUpYellowColor 2s 1 alternate;
 }
+
+/*
+javascript classes 
+*/
+
+.pop-up-screen {
+	height: 50vh;
+	width: 40%;
+	background-color: var(--bright-red);
+	position: absolute;
+	left: 30%;
+	top: 22.5%;
+	z-index: 100;
+	text-align: center;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	overflow: hidden;
+	border-radius: 5px;
+}
+.pop-up-screen-text {
+	font-size: 1.7rem;
+	margin-top: 30px;
+	font-weight: 500;
+}

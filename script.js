@@ -112,7 +112,7 @@ function firstUserClick() {
 				}, 10);
 			} else {
 				generateMoreColors = false;
-				pickColorRandomly(generateMoreColors);
+				gameOver();
 			}
 		}
 	};
@@ -201,6 +201,9 @@ function pickColorRandomly(generateMoreColors) {
 				}, colorDelay * colorDelayMultiplier); // loop through each color with delay
 				colorDelayMultiplier++;
 			}
+		}
+		if (generateMoreColors === false) {
+			container.addEventListener("mouseout", handleMouseOut);
 		}
 	}
 }
@@ -301,7 +304,7 @@ function checkUserClick() {
 	for (let i = 0; i < userChoice.length; i++) {
 		// Check if the user's click matches the color sequence at the corresponding index
 		if (userChoice[i] !== colorSequence[i]) {
-			return false;
+			gameOver();
 		}
 	}
 }
@@ -313,5 +316,38 @@ function continueGame() {
 		pickColorRandomly(true);
 	}
 }
-startScreen();
 
+function gameOver() {
+	const gameOverDiv = document.createElement("div");
+	const gameOverText = document.createElement("p");
+	const gameOverText2 = document.createElement("p");
+	const gameOverText3 = document.createElement("p");
+
+	const texts = [gameOverText, gameOverText2, gameOverText3];
+	const body = document.body;
+
+	gameOverDiv.classList.add("pop-up-screen");
+	gameOverText.classList.add("pop-up-screen-text");
+	gameOverText2.classList.add("pop-up-screen-text");
+	gameOverText3.classList.add("pop-up-screen-text");
+
+	gameOverText.textContent = "GAME OVER";
+	gameOverText2.textContent = "You picked the wrong color ";
+	gameOverText3.textContent =
+		"Window is going to reset in 6 seconds and bring you back to the beginning screen";
+
+	for (const text of texts) {
+		gameOverDiv.append(text);
+	}
+	body.append(gameOverDiv);
+	for (const color of colors) {
+		color.style.pointerEvents = "none";
+	}
+	container.style.display = "none";
+
+	setTimeout(() => {
+		location.reload();
+	}, 6000);
+}
+
+startScreen();
