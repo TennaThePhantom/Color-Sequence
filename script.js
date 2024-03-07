@@ -314,3 +314,4 @@ function continueGame() {
 	}
 }
 startScreen();
+

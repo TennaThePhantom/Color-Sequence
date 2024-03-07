@@ -20,7 +20,7 @@ body {
 	--bright-yellow: #fffd10;
 }
 .start-screen {
-	height: 80vh;
+	height: 70vh;
 	width: 57.5%;
 	background-color: var(--bright-red);
 	position: absolute;
@@ -57,7 +57,7 @@ body {
 	font-size: 1.5rem;
 	font-weight: 500;
 	position: relative;
-	top: 20%;
+	top: 35%;
 	margin: auto;
 	cursor: pointer;
 }
